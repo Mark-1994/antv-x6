@@ -1,0 +1,145 @@
+[
+    {
+        "position": {
+            "x": 390,
+            "y": 100
+        },
+        "size": {
+            "width": 120,
+            "height": 40
+        },
+        "attrs": {
+            "text": {
+                "text": "模型设计"
+            },
+            "body": {
+                "strokeWidth": 1
+            }
+        },
+        "shape": "rect",
+        "id": "node1"
+    },
+    {
+        "position": {
+            "x": 390,
+            "y": 200
+        },
+        "size": {
+            "width": 120,
+            "height": 40
+        },
+        "attrs": {
+            "text": {
+                "text": "创建临时表"
+            },
+            "body": {
+                "strokeWidth": 1
+            },
+            "label": {
+                "textWrap": {
+                    "ellipsis": true,
+                    "width": -50,
+                    "height": "50%"
+                }
+            }
+        },
+        "shape": "rect",
+        "id": "node2"
+    },
+    {
+        "position": {
+            "x": 390,
+            "y": 300
+        },
+        "size": {
+            "width": 120,
+            "height": 40
+        },
+        "attrs": {
+            "text": {
+                "text": "数据加工"
+            },
+            "body": {
+                "strokeWidth": 1
+            },
+            "label": {
+                "textWrap": {
+                    "ellipsis": true,
+                    "width": -50,
+                    "height": "50%"
+                }
+            }
+        },
+        "shape": "rect",
+        "id": "node3"
+    },
+    {
+        "position": {
+            "x": 390,
+            "y": 400
+        },
+        "size": {
+            "width": 120,
+            "height": 40
+        },
+        "attrs": {
+            "text": {
+                "text": "数据入库"
+            },
+            "body": {
+                "strokeWidth": 1
+            },
+            "label": {
+                "textWrap": {
+                    "ellipsis": true,
+                    "width": -50,
+                    "height": "50%"
+                }
+            }
+        },
+        "shape": "rect",
+        "id": "node4"
+    },
+    {
+        "shape": "edge",
+        "attrs": {
+            "line": {
+                "strokeWidth": 1
+            }
+        },
+        "source": {
+            "cell": "node1"
+        },
+        "target": {
+            "cell": "node2"
+        }
+    },
+    {
+        "shape": "edge",
+        "attrs": {
+            "line": {
+                "strokeWidth": 1
+            }
+        },
+        "source": {
+            "cell": "node2"
+        },
+        "target": {
+            "cell": "node3"
+        }
+    },
+    {
+        "shape": "edge",
+        "attrs": {
+            "line": {
+                "strokeWidth": 1
+            }
+        },
+        "source": {
+            "cell": "node3"
+        },
+        "target": {
+            "cell": "node4"
+        }
+    }
+]

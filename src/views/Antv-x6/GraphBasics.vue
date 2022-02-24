@@ -1,16 +1,18 @@
 <template>
   <div style="height: 100%;">
     <Layout>
-      <!-- <Header>Header</Header> -->
+      <Header>
+        <Button type="primary" @click="exportData">导出</Button>
+      </Header>
       <Layout>
-          <Sider>
-            列表
-          </Sider>
-          <Content>
-            <div id="container">
-              画布
-            </div>
-          </Content>
+        <!-- 左侧工具栏 -->
+        <Sider width=220>
+          <div id="flowStencil"></div>
+        </Sider>
+        <!-- 中间画布 -->
+        <Content>
+          <div id="container"></div>
+        </Content>
       </Layout>
       <!-- <Footer>Footer</Footer> -->
     </Layout>
@@ -18,31 +20,37 @@
 </template>
 
 <script>
-import { Graph } from '@antv/x6'
+import FlowGraph from './js'
 export default {
   name: 'GraphBasics',
   data () {
     return {
-      graph: {}
+      width: 0,
+      height: 0,
+      editIsShow: true // 操作
     }
   },
   mounted () {
-    this.draw()
+    this.getContainerSize()
+    this.OnDraw()
   },
   methods: {
+    OnDraw () {
+      this.draw()
+    },
     draw () {
-      this.graph = new Graph({
-        container: document.getElementById('container'),
-        width: '100%',
-        height: '100%',
-        background: {
-          background: '#fffbe6' // 设置画布背景颜色
-        },
-        grid: {
-          size: 10, // 网格大小
-          visible: true // 渲染网格背景
-        }
-      })
+      const FlowData = require('./js/data.json')
+      FlowGraph.init(this.width, this.height, this.editIsShow) // 渲染画布
+      FlowGraph.initGraphShape(FlowData) // 数据回填
+    },
+    // 页面宽高
+    getContainerSize () {
+      this.width = document.body.offsetWidth + 'px'
+      this.height = document.body.offsetHeight + 'px'
+    },
+    // 导出数据
+    exportData () {
+      // console.log(FlowGraph.init().toJSON({ diff: true }))
     }
   }
 }
