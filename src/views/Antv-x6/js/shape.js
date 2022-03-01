@@ -1,7 +1,7 @@
 // 节点样式设置
 import { Graph } from '@antv/x6'
 const widthNode = 200
-const heightNode = 34
+const heightNode = 35
 // 连接桩样式
 const groupsObj = {
   customPorts: {
@@ -14,6 +14,70 @@ const groupsObj = {
         strokeWidth: 1,
         fill: '#fff',
         offset: 10,
+        style: {
+          visibility: 'hidden'
+        }
+      }
+    }
+  }
+}
+
+// 单个节点连接桩样式
+const groupObj = {
+  customPortsTop: {
+    position: { name: 'top' },
+    attrs: {
+      circle: {
+        r: 4,
+        magnet: true,
+        stroke: '#5F95FF',
+        strokeWidth: 1,
+        fill: '#fff',
+        style: {
+          visibility: 'hidden'
+        }
+      }
+    }
+  },
+  customPortsRight: {
+    position: { name: 'right' },
+    attrs: {
+      circle: {
+        r: 4,
+        magnet: true,
+        stroke: '#5F95FF',
+        strokeWidth: 1,
+        fill: '#fff',
+        style: {
+          visibility: 'hidden'
+        }
+      }
+    }
+  },
+  customPortsBottom: {
+    position: { name: 'bottom' },
+    attrs: {
+      circle: {
+        r: 4,
+        magnet: true,
+        stroke: '#5F95FF',
+        strokeWidth: 1,
+        fill: '#fff',
+        style: {
+          visibility: 'hidden'
+        }
+      }
+    }
+  },
+  customPortsLeft: {
+    position: { name: 'left' },
+    attrs: {
+      circle: {
+        r: 4,
+        magnet: true,
+        stroke: '#5F95FF',
+        strokeWidth: 1,
+        fill: '#fff',
         style: {
           visibility: 'hidden'
         }
@@ -48,12 +112,12 @@ export const basicsNode = Graph.registerNode('basicsNode', {
       {
         id: 'left',
         group: 'customPorts',
-        args: { x: 0, y: 34 }
+        args: { x: 0, y: 35 }
       },
       {
         id: 'right',
         group: 'customPorts',
-        args: { x: '100%', y: 34 }
+        args: { x: '100%', y: 35 }
       }
     ]
   }
@@ -72,9 +136,20 @@ export const twoStageNode = Graph.registerNode('twoStageNode', {
 export const businessNode = Graph.registerNode('businessNode', {
   inherit: 'rect',
   width: 100,
-  height: 50,
+  height: 35,
   attrs: recAttrs(),
-  markup: markupObtain(1),
+  // markup: markupObtain(1),
+  markup: [
+    {
+      tagName: 'rect',
+      selector: `head`,
+      groupSelector: 'commonStyle'
+    },
+    {
+      tagName: 'image',
+      selector: 'img'
+    }
+  ],
   ports: {
     groups: groupsObj,
     items: portsItems(1)
@@ -86,18 +161,34 @@ export const tableNode = Graph.registerNode('tableNode', {
   height: 80,
   attrs: recAttrs(),
   ports: {
-    groups: groupsObj,
-    items: portsItems(3)
+    groups: groupObj,
+    items: cirPortsItems()
   }
 })
 // 矩形attrs
 function recAttrs () {
   const attrsObj = {
     commonStyle: {
+      // rx: 10, // 圆角矩形
       refWidth: '100%',
-      height: 34,
+      height: 35,
       fill: '#fff',
       strokeWidth: 1
+    },
+    head: {
+      x: 0,
+      y: 0
+    },
+    img: {
+      ref: 'head',
+      refX: '100%',
+      refY: '50%',
+      refY2: -8,
+      width: 16,
+      height: 16,
+      'xlink:href': 'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*SYCuQ6HHs5cAAAAAAAAAAAAAARQnAQ',
+      event: 'add:topic',
+      class: 'topic-image',
     }
   }
   return attrsObj
@@ -141,6 +232,17 @@ function attrsObtain (num) {
           text: ''
         }
       }
+      attrsObj[`img${i}`] = {
+        ref: `head${i}`,
+        refX: '100%',
+        refY: '100%',
+        refY2: -8,
+        width: 16,
+        height: 16,
+        xlinkHref: 'https://gw.alipayobjects.com/mdn/rms_43231b/afts/img/A*SYCuQ6HHs5cAAAAAAAAAAAAAARQnAQ',
+        event: 'add:topic',
+        class: 'topic-image'
+      }
     } else {
       attrsObj[`head${i}`] = {
         x: 0,
@@ -172,12 +274,35 @@ function markupObtain (num) {
       selector: `text${i}`,
       groupSelector: 'commonStyle1'
     })
+    textList.push({
+      tagName: 'image',
+      selector: `img${i}`
+    })
   }
   const markupList = headList.concat(textList)
   return markupList
 }
 // 表对象ports中的Items
-// function cir
+function cirPortsItems () {
+  const portsItemsList = []
+  portsItemsList.push({
+    id: 'top',
+    group: 'customPortsTop'
+  })
+  portsItemsList.push({
+    id: 'right',
+    group: 'customPortsRight'
+  })
+  portsItemsList.push({
+    id: 'bottom',
+    group: 'customPortsBottom'
+  })
+  portsItemsList.push({
+    id: 'left',
+    group: 'customPortsLeft'
+  })
+  return portsItemsList
+}
 // 获取ports中的Items
 function portsItems (num) {
   const leftList = []

@@ -6,7 +6,7 @@
         },
         "size": {
             "width": 120,
-            "height": 40
+            "height": 35
         },
         "attrs": {
             "text": {
@@ -17,7 +17,63 @@
             }
         },
         "shape": "rect",
-        "id": "node1"
+        "id": "node1",
+        "ports": {
+            "groups": {
+                "customPorts": {
+                    "position": {
+                        "name": "absolute"
+                    },
+                    "attrs": {
+                        "circle": {
+                            "r": 4,
+                            "magnet": true,
+                            "stroke": "#5f95ff",
+                            "strokeWidth": 1,
+                            "fill": "#fff",
+                            "offset": 10,
+                            "style": {
+                                "visibility": "hidden"
+                            }
+                        }
+                    }
+                }
+            },
+            "items": [
+                {
+                    "id": "top",
+                    "group": "customPorts",
+                    "args": {
+                        "x": "50%",
+                        "y": 0
+                    }
+                },
+                {
+                    "id": "bottom",
+                    "group": "customPorts",
+                    "args": {
+                        "x": "50%",
+                        "y": "100%"
+                    }
+                },
+                {
+                    "id": "left",
+                    "group": "customPorts",
+                    "args": {
+                        "x": 0,
+                        "y": "50%"
+                    }
+                },
+                {
+                    "id": "right",
+                    "group": "customPorts",
+                    "args": {
+                        "x": "100%",
+                        "y": "50%"
+                    }
+                }
+            ]
+        }
     },
     {
         "position": {
@@ -26,7 +82,7 @@
         },
         "size": {
             "width": 120,
-            "height": 40
+            "height": 35
         },
         "attrs": {
             "text": {
@@ -53,7 +109,7 @@
         },
         "size": {
             "width": 120,
-            "height": 40
+            "height": 35
         },
         "attrs": {
             "text": {
@@ -80,7 +136,7 @@
         },
         "size": {
             "width": 120,
-            "height": 40
+            "height": 35
         },
         "attrs": {
             "text": {

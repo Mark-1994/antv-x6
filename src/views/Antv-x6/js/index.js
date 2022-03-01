@@ -1,4 +1,4 @@
-import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
+import { Graph, Addon, FunctionExt, Shape, DataUri } from '@antv/x6'
 import './shape'
 export default class FlowGraph {
   // editIsShow 是否只读 false 只读 true 操作
@@ -7,6 +7,9 @@ export default class FlowGraph {
       container: document.getElementById('container'),
       width: width,
       height: height,
+      resizing: {
+        enabled: true,
+      },
       // 背景
       grid: {
         size: 10, // 网格大小
@@ -31,6 +34,12 @@ export default class FlowGraph {
       // 滚动画布
       scroller: {
         enabled: false
+      },
+      minimap: {
+        enabled: true,
+        container: document.getElementById('mapContainer'),
+        width: 250,
+        height: 150
       },
       // ctrl + 滚轮缩放
       mousewheel: {
@@ -68,9 +77,9 @@ export default class FlowGraph {
               }
             },
             router: {
-              name: 'manhattan'
+              // name: 'manhattan'
             },
-            zIndex: 0
+            zIndex: 9
           })
         },
         validateConnection ({ sourceView, targetView, sourceMagnet, targetMagnet }) {
@@ -128,12 +137,18 @@ export default class FlowGraph {
         {
           name: 'node1',
           title: '业务对象',
-          graphHeight: 100 // 模板画布高度
+          graphHeight: 100, // 模板画布高度
+          layoutOptions: {
+            marginX: 45
+          }
         },
         {
           name: 'node2',
           title: '表对象',
-          graphHeight: 100
+          graphHeight: 100,
+          layoutOptions: {
+            marginX: 40
+          }
         }
       ]
     })
@@ -167,6 +182,11 @@ export default class FlowGraph {
       const ports = container.querySelectorAll('.x6-port-body')
       this.showPorts(ports, true)
     }), 500)
+    // 鼠标离开节点
+    graph.on('node:mouseleave', ({ cell, view }) => {
+      const ports = container.querySelectorAll('.x6-port-body')
+      this.showPorts(ports, false)
+    })
   }
 
   // 连接桩隐藏处理
@@ -184,5 +204,56 @@ export default class FlowGraph {
   // 销毁
   static destroy () {
     this.graph.dispose()
+  }
+
+  // 数据导出
+  static exportData () {
+    return this.graph.toJSON()
+  }
+
+  // 导出画布图片
+  static exportPic () {
+    this.graph.toPNG((dataUri) => {
+      DataUri.downloadDataUri(dataUri, 'chart.png')
+    })
+  }
+
+  // 新增节点
+  static addData (x, y) {
+    this.graph.addNode({
+      shape: 'rect', // 指定使用何种图形，默认值为 'rect'
+      x: x,
+      y: y,
+      width: 120,
+      height: 35,
+      ports: [
+        {
+          id: 'port1',
+          attrs: {
+            circle: {
+              r: 4,
+              magnet: true, // 交互是否可连
+              stroke: '#5f95ff',
+              strokeWidth: 1,
+              fill: '#fff',
+              offset: 10,
+              style: {
+                visibility: 'hidden'
+              }
+            }
+          }
+        }
+      ],
+      attrs: {
+        body: {
+          fill: '#fff',
+          strokeWidth: 1
+        },
+        label: {
+          text: '',
+          fill: 'dark',
+        }
+      }
+    })
   }
 }
